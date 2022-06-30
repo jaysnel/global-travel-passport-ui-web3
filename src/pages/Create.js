@@ -77,10 +77,11 @@ export default function Create() {
         const createPassportTxn = await globalPassportContract.createNewPassport(person.citizenBio, person.citizenInfo);
         console.log('Mining...', createPassportTxn.hash);
         await createPassportTxn.wait();
+      
       }
 
     } catch(err) {
-        console.error(err);
+      console.error(err);
     }
     
   }
