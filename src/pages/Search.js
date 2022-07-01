@@ -64,6 +64,29 @@ export default function Search() {
               <div>
                 <div className='information-container'>
                   <div className='form-section'>
+                    <label>Last Updated</label>
+                    <input type="text" value={el.citizenInfo.lastUpdated || NotAvailable} disabled/>
+                  </div>
+                  <div className='form-section'>
+                    <label>Status</label>
+                    <div className='form-section-list'>
+                      {
+                        el.citizenInfo.status.map((el) => {
+                          return (
+                            <div>
+                              <div>
+                                <label>Verified</label>
+                                <input type="text" value={el.verified || NotAvailable} disabled/>
+                                <label>Wanted</label>
+                                <input type="text" value={el.wanted || NotAvailable} disabled/>
+                              </div>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
+                  </div>
+                  <div className='form-section'>
                     <label>Name</label>
                     <input type="text" value={el.citizenBio.name || NotAvailable} disabled/>
                   </div>
@@ -82,6 +105,63 @@ export default function Search() {
                   <div className='form-section'>
                     <label>DOB</label>
                     <input type="text" value={el.citizenBio.dob || NotAvailable} disabled/>
+                  </div>
+                  <div className='form-section'>
+                    <label>Verfiyer</label>
+                    <input type="text" value={el.citizenBio.verifyer || NotAvailable} disabled/>
+                  </div>
+                  <div className='form-section'>
+                    <label>Citizenship</label>
+                    <div className='form-section-list'>
+                      {
+                        el.citizenBio.citizenship.map((el) => {
+                          return (
+                            <div>
+                              <input type="text" value={el.country || NotAvailable} disabled/>
+                              <input type="text" value={el.signature || NotAvailable} disabled/>
+                              <input type="text" value={el.date || NotAvailable} disabled/>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
+                  </div>
+                  <div className='form-section'>
+                    <label>Previous ID</label>
+                    <div className='form-section-list'>
+                      {
+                        el.citizenBio.previousId.map((el) => {
+                          return (
+                            <div>
+                              <input type="text" value={el || NotAvailable} disabled/>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
+                  </div>
+                  <div className='form-section'>
+                    <label>Visited</label>
+                    <div className='form-section-list'>
+                      {
+                        el.citizenInfo.visited.map((el) => {
+                          return (
+                            <div>
+                              <div>
+                                <label>Country</label>
+                                <input type="text" value={el.country || NotAvailable} disabled/>
+                                <label>Date Start</label>
+                                <input type="text" value={el.dateStart || NotAvailable} disabled/>
+                                <label>Date End</label>
+                                <input type="text" value={el.dateEnd || NotAvailable} disabled/>
+                                <label>Country Signature</label>
+                                <input type="text" value={el.countrySignature || NotAvailable} disabled/>
+                              </div>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
                   </div>
                 </div>
               
