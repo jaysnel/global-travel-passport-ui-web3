@@ -1,7 +1,11 @@
 import './App.css';
 
 function App() {
-    return null;
+    return (
+      <div>
+        <h1>Global Passport App</h1>
+      </div>
+    );
   }
 
 

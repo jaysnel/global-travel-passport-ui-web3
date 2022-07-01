@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import abi from '../utils/GlobalPassport.json';
-import UltraInstictGoku from '../images/ultrainstinct-goku.jpeg';
+
 
 export default function Search() {
   const ethers = require('ethers');
   const contractAddress = process.env.REACT_APP_GLOBAL_PASSPORT_CONTRACT_ADDRESS;
   const contractABI = abi.abi;
   const [fullList, setFullList] = useState([]);
+  const NotAvailable = 'N/A';
+
+  // Getting local images
+  function importAll(r) {
+    return r.keys().map(r);
+  }
+  const headshotImages = importAll(require.context('../images', false, /\.(png|jpe?g|svg)$/));
 
   async function getAllCitizens() {
     try {
@@ -43,24 +50,47 @@ export default function Search() {
     getAllCitizens();
   }, [])
 
-  console.log(fullList);
+  
+
+  // console.log(fullList);
 
   return (
-    <div>
+    <div className='search-container'>
       {
         fullList.map((el, idx) => {
+          console.log(el)
           return (
-            <div key={idx} className='search-container'>
-
-              <div className='inner-container'>
-                <h3>{el.citizenBio.name}</h3>: 
-                {el.citizenBio.id}
-              </div>
-
+            <div key={idx} className='search-result'>
               <div>
-                <img src={el.citizenBio.photo || UltraInstictGoku} alt={el.citizenBio.name} className='headshot'/>
-              </div>
+                <div className='information-container'>
+                  <div className='form-section'>
+                    <label>Name</label>
+                    <input type="text" value={el.citizenBio.name || NotAvailable} disabled/>
+                  </div>
+                  <div className='form-section'>
+                    <label>ID</label>
+                    <input type="text" value={el.citizenBio.id || NotAvailable} disabled/>
+                  </div>
+                  <div className='form-section'>
+                    <label>Issued</label>
+                    <input type="text" value={el.citizenBio.issued || NotAvailable} disabled/>
+                  </div>
+                  <div className='form-section'>
+                    <label>Expiration</label>
+                    <input type="text" value={el.citizenBio.expiration || NotAvailable} disabled/>
+                  </div>
+                  <div className='form-section'>
+                    <label>DOB</label>
+                    <input type="text" value={el.citizenBio.dob || NotAvailable} disabled/>
+                  </div>
+                </div>
+              
 
+                <div >
+                  {/* <img src={el.citizenBio.photo || UltraInstictGoku} alt={`${el.citizenBio.name} headshot`} className='headshot'/> */}
+                  <img src={headshotImages[idx]} alt={`${el.citizenBio.name} headshot`} className='headshot'/>
+                </div>
+              </div>
             </div>
           )
         })
