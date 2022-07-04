@@ -52,7 +52,7 @@ input {
 /* Search Page */
 .search-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 350px);
+    grid-template-columns: repeat(auto-fit, 400px);
     justify-content: center;
 }
 
