@@ -72,19 +72,14 @@ export default function Search() {
       return obj.citizenBio[valueType].toString().toLowerCase().includes(searchValue);
     }
 
-    const filteredByName = fullList.filter((el) => {
-      return getSearchResults(el, 'name');
+    const filteredSearch = fullList.filter((el) => {
+      return getSearchResults(el, 'name') 
+      && getSearchResults(el, 'id') 
+      && getSearchResults(el, 'issued');
     })
 
-    const filteredByNameAndId = filteredByName.filter((el) => {
-      return getSearchResults(el, 'id');
-    })
 
-    const filteredByNameAndIdAndIssued = filteredByNameAndId.filter((el) => {
-      return getSearchResults(el, 'issued');
-    })
-
-    setFilteredList(filteredByNameAndIdAndIssued);
+    setFilteredList(filteredSearch);
   }
 
   useEffect(() => {
