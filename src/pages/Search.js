@@ -101,12 +101,13 @@ export default function Search() {
       <div className='search-container'>
         {
           filteredList.map((el, idx) => {
+            console.log(el)
             return (
               <div key={idx} className='search-result'>
                 <div>
                 <div >
                     {/* <img src={el.citizenBio.photo || UltraInstictGoku} alt={`${el.citizenBio.name} headshot`} className='headshot'/> */}
-                    <img src={headshotImages[idx]} alt={`${el.citizenBio.name} headshot`} className='headshot'/>
+                    <img src={el.citizenBio.photo || headshotImages[idx]} alt={`${el.citizenBio.name} headshot`} className='headshot'/>
                   </div>
                   <div className='information-container'>
                     <div className='form-section'>

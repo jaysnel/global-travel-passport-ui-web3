@@ -7,9 +7,9 @@ export default function Create() {
   const contractAddress = process.env.REACT_APP_GLOBAL_PASSPORT_CONTRACT_ADDRESS;
   const contractABI = abi.abi;
   const date = new Date();
-  const day = date.getDay();
-  const month = date.getMonth();
-  const year = date.getFullYear();
+  const day = date.getUTCDate();
+  const month = date.getUTCMonth() + 1; // Months are 0 based
+  const year = date.getUTCFullYear();
   const timestamp = `${month}/${day}/${year}`
   const expirartion = `${month}/${day}/${year + 10}`
   const [id, setId] = useState(0);
@@ -57,9 +57,19 @@ export default function Create() {
       })
     }
 
-    function handleChange(e) {
-      setId(e.target.value);
-    }
+  
+
+  const updateName = (e) => {
+    setName(e.target.value);
+  }
+
+  const updateDOB = (e) => {
+    setDob(e.target.value);
+  }
+
+  const updatePhotoURL = (e) => {
+    setPhoto(e.target.value);
+  }
 
   async function createPassport() {
     try {
@@ -69,7 +79,6 @@ export default function Create() {
         // Goes through the object and turns each value into an array of strings
         // to send to contract
         stringifyObjects(person)
-  
   
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
@@ -97,7 +106,7 @@ export default function Create() {
 
           <div>
             <label>Name</label>
-            <input type='text' name='name' placeholder='Name' onChange={handleChange}/>
+            <input type='text' name='name' placeholder='Name' onChange={updateName}/>
           </div>
 
           <div>
@@ -117,12 +126,12 @@ export default function Create() {
 
           <div>
             <label>Date Of Birth</label>
-            <input type='text' name='dob' placeholder='DOB' onChange={handleChange}/>
+            <input type='text' name='dob' placeholder='DOB' onChange={updateDOB}/>
           </div>
 
           <div>
             <label>Photo</label>
-            <input type='text' name='photo' placeholder='Photo URL' onChange={handleChange}/>
+            <input type='text' name='photo' placeholder='Photo URL' onChange={updatePhotoURL}/>
           </div>
 
         </div>
