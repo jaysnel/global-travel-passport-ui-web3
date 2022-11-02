@@ -13,11 +13,12 @@ function App() {
   const [isCheckingForWallet, setIsCheckingForWallet] = useState(true);
 
   const checkIfWalletIsConnected = async () => {
+    setWalletConnectd(false);
+    setIsCheckingForWallet(true);
       try {
         const { ethereum } =  window;
         const accounts= await ethereum.request({method: 'eth_requestAccounts'});
         setWalletConnectd(true);
-        setIsCheckingForWallet(true);
         console.log(accounts)
       } catch(err) {
         setWalletConnectd(false);
@@ -46,7 +47,7 @@ function App() {
             </Routes>
           </BrowserRouter>
           :
-          <CheckForWallet isCheckingForWallet={isCheckingForWallet} walletConnected={walletConnected}/>
+          <div className='m-auto text-center w-80'><CheckForWallet isCheckingForWallet={isCheckingForWallet} walletConnected={walletConnected} checkIfWalletIsConnected={checkIfWalletIsConnected}/></div>
         }
       </>
     );
