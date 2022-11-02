@@ -12,12 +12,7 @@ export default function Search() {
   const [valueId, setValueId] = useState('');
   const [valueIssued, setValueIssued] = useState('');
   const NotAvailable = 'N/A';
-  // Getting local images
-  // function importAll(r) {
-  //   return r.keys().map(r);
-  // }
-  // const headshotImages = importAll(require.context('../images', false, /\.(png|jpe?g|svg)$/));
-  const defaultImage = '../images/headshot1.jpeg'
+  const defaultImage = '/images/defaultImage.jpeg'
 
   async function getAllCitizens() {
     try {
@@ -108,8 +103,8 @@ export default function Search() {
             return (
               <div key={idx} className='border border-solid border-cyan-400'>
                 <div>
-                <div >
-                    <img src={defaultImage} alt={`${el.citizenBio.name} headshot`} className='headshot'/>
+                  <div>
+                    <img src={el.citizenBio.photo || defaultImage} alt={`${el.citizenBio.name} headshot`} className='max-w-sm'/>
                   </div>
                   <div className='information-container'>
                     <div className='search-item'>
