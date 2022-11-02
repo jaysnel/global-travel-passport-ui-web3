@@ -14,3 +14,24 @@ body {
 h1, h2, h3, p {
     color: #fff;
 }
+
+.create-item {
+    @apply flex;
+    @apply flex-col;
+}
+
+.create-item label {
+    @apply text-white;
+}
+
+.search-item {
+    @apply grid;
+    @apply grid-cols-2;
+    @apply mb-5;
+    @apply text-white;
+}
+
+.search-item input {
+    @apply bg-black;
+    @apply w-full;
+}

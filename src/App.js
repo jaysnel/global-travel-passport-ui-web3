@@ -39,12 +39,14 @@ function App() {
           ?
           <BrowserRouter>
             <div><NavBar/></div>
-            <Routes>
-              <Route path='/' element={<Home/>} />
-              <Route path='/create' element={<Create/>} />
-              <Route path='/search' element={<Search/>} />
-              <Route path='*' element={<PageNotFound/>} />
-            </Routes>
+            <div className='px-5'>
+              <Routes>
+                <Route path='/' element={<Home/>} />
+                <Route path='/create' element={<Create/>} />
+                <Route path='/search' element={<Search/>} />
+                <Route path='*' element={<PageNotFound/>} />
+              </Routes>
+            </div>
           </BrowserRouter>
           :
           <div className='m-auto text-center w-80'><CheckForWallet isCheckingForWallet={isCheckingForWallet} walletConnected={walletConnected} checkIfWalletIsConnected={checkIfWalletIsConnected}/></div>

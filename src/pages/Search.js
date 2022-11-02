@@ -96,27 +96,29 @@ export default function Search() {
 
   return (
     <>
-      <input type="text" placeholder='Search Name' onChange={(e) => {setFilterSearchParams(e, 'name')}}/>
-      <input type="number" placeholder='Search Id' onChange={(e) => {setFilterSearchParams(e, 'id')}}/>
-      <input type="text" placeholder='Search Issued' onChange={(e) => {setFilterSearchParams(e, 'issued')}}/>
-      <div className='search-container'>
+      <div className='m-auto text-center my-5'>
+        <input type="text" placeholder='Search Name' onChange={(e) => {setFilterSearchParams(e, 'name')}}/>
+        <input className='ml-2' type="number" placeholder='Search Id' onChange={(e) => {setFilterSearchParams(e, 'id')}}/>
+        <input className='ml-2' type="text" placeholder='Search Issued' onChange={(e) => {setFilterSearchParams(e, 'issued')}}/>
+      </div>
+      <div className=' grid grid-cols-2 gap-5'>
         {
           filteredList.map((el, idx) => {
             console.log(el)
             return (
-              <div key={idx} className='search-result'>
+              <div key={idx} className='border border-solid border-cyan-400'>
                 <div>
                 <div >
                     <img src={defaultImage} alt={`${el.citizenBio.name} headshot`} className='headshot'/>
                   </div>
                   <div className='information-container'>
-                    <div className='form-section'>
+                    <div className='search-item'>
                       <label>Last Updated</label>
                       <input type="text" value={el.citizenInfo.lastUpdated || NotAvailable} disabled/>
                     </div>
-                    <div className='form-section'>
+                    <div className='search-item'>
                       <label>Status</label>
-                      <div className='form-section-list'>
+                      <div className='search-item-list'>
                         {
                           el.citizenInfo.status.map((el, idx) => {
                             return (
@@ -133,33 +135,33 @@ export default function Search() {
                         }
                       </div>
                     </div>
-                    <div className='form-section'>
+                    <div className='search-item'>
                       <label>Name</label>
                       <input type="text" value={el.citizenBio.name || NotAvailable} disabled/>
                     </div>
-                    <div className='form-section'>
+                    <div className='search-item'>
                       <label>ID</label>
                       <input type="text" value={el.citizenBio.id || NotAvailable} disabled/>
                     </div>
-                    <div className='form-section'>
+                    <div className='search-item'>
                       <label>Issued</label>
                       <input type="text" value={el.citizenBio.issued || NotAvailable} disabled/>
                     </div>
-                    <div className='form-section'>
+                    <div className='search-item'>
                       <label>Expiration</label>
                       <input type="text" value={el.citizenBio.expiration || NotAvailable} disabled/>
                     </div>
-                    <div className='form-section'>
+                    <div className='search-item'>
                       <label>DOB</label>
                       <input type="text" value={el.citizenBio.dob || NotAvailable} disabled/>
                     </div>
-                    <div className='form-section'>
+                    <div className='search-item'>
                       <label>Verfiyer</label>
                       <input type="text" value={el.citizenBio.verifyer || NotAvailable} disabled/>
                     </div>
-                    <div className='form-section'>
+                    <div className='search-item'>
                       <label>Citizenship</label>
-                      <div className='form-section-list'>
+                      <div className='search-item-list'>
                         {
                           el.citizenBio.citizenship.map((el, idx) => {
                             return (
@@ -173,9 +175,9 @@ export default function Search() {
                         }
                       </div>
                     </div>
-                    <div className='form-section'>
+                    <div className='search-item'>
                       <label>Previous ID</label>
-                      <div className='form-section-list'>
+                      <div className='search-item-list'>
                         {
                           el.citizenBio.previousId.map((el, idx) => {
                             return (
@@ -187,9 +189,9 @@ export default function Search() {
                         }
                       </div>
                     </div>
-                    <div className='form-section'>
+                    <div className='search-item'>
                       <label>Visited</label>
-                      <div className='form-section-list'>
+                      <div className='search-item-list'>
                         {
                           el.citizenInfo.visited.map((el, idx) => {
                             return (

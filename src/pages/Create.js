@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../App.css';
 import abi from '../utils/GlobalPassport.json';
+import Button from '../components/Button';
 
 export default function Create() {
   const ethers = require('ethers');
@@ -97,45 +98,45 @@ export default function Create() {
 
     return (
       <>
-        <h1>Create New Passport</h1>
-        <div className="create-form-container">
-          <div>
+        <h2 className='mb-5 text-2xl'>Create New Passport</h2>
+        <div className="grid sm:grid-cols-1 md:grid-cols-4 gap-5">
+          <div className='create-item'>
             <label>ID</label>
             <input type='number' name='id' placeholder='ID' disabled/>
           </div>
 
-          <div>
+          <div className='create-item'>
             <label>Name</label>
             <input type='text' name='name' placeholder='Name' onChange={updateName}/>
           </div>
 
-          <div>
+          <div className='create-item'>
             <label>Issued</label>
             <input type='text' name='issued' value={timestamp} disabled/>
           </div>
 
-          <div>
+          <div className='create-item'>
             <label>Expirartion</label>
             <input type='text' name='expirartion' value={expirartion} disabled/>
           </div>
 
-          <div>
+          <div className='create-item'>
             <label>Verifiyer</label>
             <input type='text' name='verifiyer' value={verifiyer} disabled/>
           </div>
 
-          <div>
+          <div className='create-item'>
             <label>Date Of Birth</label>
             <input type='text' name='dob' placeholder='DOB' onChange={updateDOB}/>
           </div>
 
-          <div>
+          <div className='create-item'>
             <label>Photo</label>
             <input type='text' name='photo' placeholder='Photo URL' onChange={updatePhotoURL}/>
           </div>
 
         </div>
-        <button onClick={() => {createPassport()}}>Create Passport</button>
+        <Button buttonText='Create Passport' buttonClassNames='bg-cyan-500 max-w-sm py-3 mt-5' buttonFunction={createPassport}/>
       </>
     )
   }
