@@ -10,14 +10,18 @@ import CheckForWallet from './components/CheckForWallet';
 
 function App() {
   const [walletConnected, setWalletConnectd] = useState(false);
+  const [isCheckingForWallet, setIsCheckingForWallet] = useState(true);
+
   const checkIfWalletIsConnected = async () => {
       try {
         const { ethereum } =  window;
         const accounts= await ethereum.request({method: 'eth_requestAccounts'});
         setWalletConnectd(true);
+        setIsCheckingForWallet(true);
         console.log(accounts)
       } catch(err) {
         setWalletConnectd(false);
+        setIsCheckingForWallet(false);
       console.log(err);
     }
   }
@@ -27,20 +31,24 @@ function App() {
     }, [])
 
     return (
-      walletConnected 
-      ?
-      <BrowserRouter>
-        <div><NavBar/></div>
-        <Routes>
-          <Route path='/' element={<Home/>} />
-          <Route path='/create' element={<Create/>} />
-          <Route path='/search' element={<Search/>} />
-          <Route path='*' element={<PageNotFound/>} />
-        </Routes>
-      </BrowserRouter>
-      :
-      <CheckForWallet />
-
+      <>
+        <h1 className='text-center text-xl my-5'>Global Travel Passport</h1>
+        {
+          walletConnected 
+          ?
+          <BrowserRouter>
+            <div><NavBar/></div>
+            <Routes>
+              <Route path='/' element={<Home/>} />
+              <Route path='/create' element={<Create/>} />
+              <Route path='/search' element={<Search/>} />
+              <Route path='*' element={<PageNotFound/>} />
+            </Routes>
+          </BrowserRouter>
+          :
+          <CheckForWallet isCheckingForWallet={isCheckingForWallet} walletConnected={walletConnected}/>
+        }
+      </>
     );
   }
 
