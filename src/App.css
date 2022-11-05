@@ -15,6 +15,10 @@ h1, h2, h3, p {
     color: #fff;
 }
 
+.home-content p {
+    @apply mt-5;
+}
+
 .create-item {
     @apply flex;
     @apply flex-col;

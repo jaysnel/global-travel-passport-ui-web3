@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import LoadingIcon from '../components/LoadingIcon';
 import abi from '../utils/GlobalPassport.json';
 
 
@@ -74,7 +75,6 @@ export default function Search() {
       && getSearchResults(el, 'issued');
     })
 
-
     setFilteredList(filteredSearch);
   }
 
@@ -87,7 +87,14 @@ export default function Search() {
   }, [valueName, valueId, valueIssued])
 
 
-
+  if(fullList.length === 0) {
+    return (
+      <div className='mt-5'>
+        <h3 className='text-center'>Please wait...</h3>
+        <LoadingIcon classNames='m-auto mt-5' fill='rgb(34 211 238)'/>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -99,7 +106,6 @@ export default function Search() {
       <div className=' grid grid-cols-2 gap-5'>
         {
           filteredList.map((el, idx) => {
-            console.log(el)
             return (
               <div key={idx} className='border border-solid border-cyan-400'>
                 <div>
@@ -152,7 +158,7 @@ export default function Search() {
                     </div>
                     <div className='search-item'>
                       <label>Verfiyer</label>
-                      <input type="text" value={el.citizenBio.verifyer || NotAvailable} disabled/>
+                      <input type="text" value={el.citizenBio.verifier || NotAvailable} disabled/>
                     </div>
                     <div className='search-item'>
                       <label>Citizenship</label>

@@ -11,19 +11,21 @@ import CheckForWallet from './components/CheckForWallet';
 function App() {
   const [walletConnected, setWalletConnectd] = useState(false);
   const [isCheckingForWallet, setIsCheckingForWallet] = useState(true);
+  const [currentSigner, setCurrentSigner] = useState('');
+  const [userErrorMessage, setUserErrorMessage] = useState('');
 
   const checkIfWalletIsConnected = async () => {
     setWalletConnectd(false);
     setIsCheckingForWallet(true);
       try {
         const { ethereum } =  window;
-        const accounts= await ethereum.request({method: 'eth_requestAccounts'});
+        const signer = await ethereum.request({method: 'eth_requestAccounts'});
         setWalletConnectd(true);
-        console.log(accounts)
+        setCurrentSigner(signer[0]);
       } catch(err) {
         setWalletConnectd(false);
         setIsCheckingForWallet(false);
-      console.log(err);
+        setUserErrorMessage(err.message);
     }
   }
   
@@ -40,16 +42,23 @@ function App() {
           <BrowserRouter>
             <div><NavBar/></div>
             <div className='px-5'>
+            <div className='text-white my-5 text-center'>Connected Acccount: {currentSigner}</div>
               <Routes>
                 <Route path='/' element={<Home/>} />
-                <Route path='/create' element={<Create/>} />
+                <Route path='/create' element={<Create currentSigner={currentSigner}/>} />
                 <Route path='/search' element={<Search/>} />
                 <Route path='*' element={<PageNotFound/>} />
               </Routes>
             </div>
           </BrowserRouter>
           :
-          <div className='m-auto text-center w-80'><CheckForWallet isCheckingForWallet={isCheckingForWallet} walletConnected={walletConnected} checkIfWalletIsConnected={checkIfWalletIsConnected}/></div>
+          <div className='m-auto text-center w-80'>
+            <CheckForWallet 
+            isCheckingForWallet={isCheckingForWallet} 
+            walletConnected={walletConnected} 
+            checkIfWalletIsConnected={checkIfWalletIsConnected} 
+            userMessage={userErrorMessage}/>
+          </div>
         }
       </>
     );

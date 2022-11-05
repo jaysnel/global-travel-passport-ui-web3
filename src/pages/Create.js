@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../App.css';
 import abi from '../utils/GlobalPassport.json';
 import Button from '../components/Button';
+import stringifyObjects from '../helpers/stringifyObject';
+import LoadingIcon from '../components/LoadingIcon';
 
-export default function Create() {
+export default function Create(props) {
+  const {currentSigner} = props;
   const ethers = require('ethers');
   const contractAddress = process.env.REACT_APP_GLOBAL_PASSPORT_CONTRACT_ADDRESS;
   const contractABI = abi.abi;
@@ -13,13 +16,29 @@ export default function Create() {
   const year = date.getUTCFullYear();
   const timestamp = `${month}/${day}/${year}`
   const expirartion = `${month}/${day}/${year + 10}`
+  const [isCreatingPassport, setIsCreatingPassport] = useState(false);
   const [id, setId] = useState(0);
   const [name, setName] = useState('');
   const [previousId, setPreviousId] = useState([]);
-  const [verifiyer, setVerifiyer] = useState('');
+  const [verifier, setVerifiyer] = useState(currentSigner);
   const [dob, setDob] = useState('');
   const [photo, setPhoto] = useState('');
   const [citizenship, setCitizenship] = useState([]);
+  const [totalCitizenCount, setTotalCitizenCount] = useState(0);
+
+  const getTotalCitizenCount = async () => {
+    const { ethereum } =  window;
+    try {
+      const provider = new ethers.providers.Web3Provider(ethereum)
+      const signer = provider.getSigner();
+      const globalPassportContract = new ethers.Contract(contractAddress, contractABI, signer);
+      const citizens = await globalPassportContract.getCitizen();
+      const citizenCount = citizens.length;
+      setId(citizenCount + 1);
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   const person =  {
     citizenBio: [
@@ -29,7 +48,7 @@ export default function Create() {
         previousId,
         issued: timestamp,
         expiration: expirartion,
-        verifiyer, // ID of entity that did original verification when signing up the first time
+        verifier, // ID of entity that did original verification when signing up the first time
         dob,
         photo, // maybe needs to be formated in a different way
         citizenship
@@ -44,22 +63,8 @@ export default function Create() {
       }
     ]
     }
-  
-    // Goes through the object and turns each value into an array of strings
-    // to send to contract
-    function stringifyObjects(item) {
-      const currentObject = item
-      const objectValues = Object.values(currentObject)
-
-      objectValues.forEach((el) => {
-        el.forEach((el2, idx) => {
-          el[idx] = JSON.stringify(el2);
-        })
-      })
-    }
 
   
-
   const updateName = (e) => {
     setName(e.target.value);
   }
@@ -73,6 +78,7 @@ export default function Create() {
   }
 
   async function createPassport() {
+    setIsCreatingPassport(true);
     try {
       const { ethereum } =  window;
 
@@ -87,14 +93,20 @@ export default function Create() {
         const createPassportTxn = await globalPassportContract.createNewPassport(person.citizenBio, person.citizenInfo);
         console.log('Mining...', createPassportTxn.hash);
         await createPassportTxn.wait();
+        setIsCreatingPassport(false);
       
       }
 
     } catch(err) {
+      setIsCreatingPassport(false);
       console.error(err);
     }
     
   }
+
+  useEffect(() => {
+    getTotalCitizenCount();
+  })
 
     return (
       <>
@@ -102,7 +114,7 @@ export default function Create() {
         <div className="grid sm:grid-cols-1 md:grid-cols-4 gap-5">
           <div className='create-item'>
             <label>ID</label>
-            <input type='number' name='id' placeholder='ID' disabled/>
+            <input type='number' name='id' placeholder={id} disabled/>
           </div>
 
           <div className='create-item'>
@@ -121,8 +133,8 @@ export default function Create() {
           </div>
 
           <div className='create-item'>
-            <label>Verifiyer</label>
-            <input type='text' name='verifiyer' value={verifiyer} disabled/>
+            <label>verifier</label>
+            <input type='text' name='verifier' value={verifier} disabled/>
           </div>
 
           <div className='create-item'>
@@ -136,7 +148,8 @@ export default function Create() {
           </div>
 
         </div>
-        <Button buttonText='Create Passport' buttonClassNames='bg-cyan-500 max-w-sm py-3 mt-5' buttonFunction={createPassport}/>
+        {isCreatingPassport && <LoadingIcon classNames='m-auto mt-5' fill='rgb(34 211 238)'/>}
+        {!isCreatingPassport && <Button buttonText='Create Passport' buttonClassNames='bg-cyan-500 max-w-sm py-3 mt-5' buttonFunction={createPassport}/>}
       </>
     )
   }

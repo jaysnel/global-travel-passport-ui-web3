@@ -3,7 +3,7 @@ import LoadingIcon from './LoadingIcon';
 import Button from './Button';
 
 export default function CheckForWallet(props) {
-    const { isCheckingForWallet, walletConnected, checkIfWalletIsConnected } = props;
+    const { isCheckingForWallet, walletConnected, checkIfWalletIsConnected, userMessage } = props;
 
     if(isCheckingForWallet) {
         return (
@@ -16,8 +16,10 @@ export default function CheckForWallet(props) {
 
     if(!walletConnected) {
         return (
-            <div>
-                <h3>Wallet doesnt seem to be connected</h3>
+            <div className='border border-solid border-cyan-400 p-5'>
+                <h3 className='mb-5'>Wallet not connected or you do not have a wallet installed.</h3>
+                <h3 className='mb-5'>If you do not have one installed, we recommend MetaMask.</h3>
+                <p className='mb-5 text-red-600'>{userMessage}</p>
                 <Button buttonText='Connect Wallet' buttonClassNames='bg-cyan-500' buttonFunction={checkIfWalletIsConnected}/>
             </div>
         )
