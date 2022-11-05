@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../App.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import abi from '../utils/GlobalPassport.json';
 import Button from '../components/Button';
 import stringifyObjects from '../helpers/stringifyObject';
@@ -21,7 +23,8 @@ export default function Create(props) {
   const [name, setName] = useState('');
   const [previousId, setPreviousId] = useState([]);
   const [verifier, setVerifiyer] = useState(currentSigner);
-  const [dob, setDob] = useState('');
+  const [formattedDob, setFormattedDob] = useState('');
+  const [theDob, setTheDob] = useState(new Date());
   const [photo, setPhoto] = useState('');
   const [citizenship, setCitizenship] = useState([]);
   const [totalCitizenCount, setTotalCitizenCount] = useState(0);
@@ -49,7 +52,7 @@ export default function Create(props) {
         issued: timestamp,
         expiration: expirartion,
         verifier, // ID of entity that did original verification when signing up the first time
-        dob,
+        dob: formattedDob,
         photo, // maybe needs to be formated in a different way
         citizenship
       },
@@ -70,7 +73,13 @@ export default function Create(props) {
   }
 
   const updateDOB = (e) => {
-    setDob(e.target.value);
+    const date = e;
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const selectedDOB = `${month}/${day}/${year}`;
+    setTheDob(date);
+    setFormattedDob(selectedDOB);
   }
 
   const updatePhotoURL = (e) => {
@@ -78,6 +87,7 @@ export default function Create(props) {
   }
 
   async function createPassport() {
+    return console.log(person)
     setIsCreatingPassport(true);
     try {
       const { ethereum } =  window;
@@ -139,7 +149,12 @@ export default function Create(props) {
 
           <div className='create-item'>
             <label>Date Of Birth</label>
-            <input type='text' name='dob' placeholder='DOB' onChange={updateDOB}/>
+            {/* <input type='text' name='dob' placeholder='DOB' onChange={updateDOB}/> */}
+            <DatePicker 
+            className='w-full'
+            selected={theDob} 
+            onChange={date => updateDOB(date)} 
+            />
           </div>
 
           <div className='create-item'>
