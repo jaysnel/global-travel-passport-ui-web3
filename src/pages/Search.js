@@ -103,14 +103,14 @@ export default function Search() {
         <input className='ml-2' type="number" placeholder='Search Id' onChange={(e) => {setFilterSearchParams(e, 'id')}}/>
         <input className='ml-2' type="text" placeholder='Search Issued' onChange={(e) => {setFilterSearchParams(e, 'issued')}}/>
       </div>
-      <div className=' grid grid-cols-2 gap-5'>
+      <div className=' grid sm:grid-cols-2 md:grid-cols-3 gap-5'>
         {
           filteredList.map((el, idx) => {
             return (
               <div key={idx} className='border border-solid border-cyan-400'>
                 <div>
-                  <div>
-                    <img src={el.citizenBio.photo || defaultImage} alt={`${el.citizenBio.name} headshot`} className='max-w-sm'/>
+                  <div className='max-w-full mb-5'>
+                    <img src={el.citizenBio.photo || defaultImage} alt={`${el.citizenBio.name} headshot`} className='w-sm h-sm object-cover'/>
                   </div>
                   <div className='information-container'>
                     <div className='search-item'>
