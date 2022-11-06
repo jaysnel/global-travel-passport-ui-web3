@@ -161,7 +161,7 @@ export default function Search() {
                       <label>Verfiyer</label>
                       <input type="text" value={el.citizenBio.verifier || NotAvailable} disabled/>
                     </div>
-                    <div className='search-item'>
+                    {/* <div className='search-item'>
                       <label>Citizenship</label>
                       <div className='search-item-list'>
                         {
@@ -176,8 +176,8 @@ export default function Search() {
                           })
                         }
                       </div>
-                    </div>
-                    <div className='search-item'>
+                    </div> */}
+                    {/* <div className='search-item'>
                       <label>Previous ID</label>
                       <div className='search-item-list'>
                         {
@@ -190,8 +190,8 @@ export default function Search() {
                           })
                         }
                       </div>
-                    </div>
-                    <div className='search-item'>
+                    </div> */}
+                    {/* <div className='search-item'>
                       <label>Visited</label>
                       <div className='search-item-list'>
                         {
@@ -213,7 +213,7 @@ export default function Search() {
                           })
                         }
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 
 
