@@ -13,9 +13,9 @@ export default function Create(props) {
   const contractAddress = process.env.REACT_APP_GLOBAL_PASSPORT_CONTRACT_ADDRESS;
   const contractABI = abi.abi;
   const date = new Date();
-  const day = date.getUTCDate();
-  const month = date.getUTCMonth() + 1; // Months are 0 based
-  const year = date.getUTCFullYear();
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Months are 0 based
+  const year = date.getFullYear();
   const timestamp = `${month}/${day}/${year}`
   const expirartion = `${month}/${day}/${year + 10}`
   const [isCreatingPassport, setIsCreatingPassport] = useState(false);

@@ -17,6 +17,7 @@ export default function Search() {
 
   async function getAllCitizens() {
     try {
+      console.log(window)
       const { ethereum } =  window;
 
       if(ethereum) {
