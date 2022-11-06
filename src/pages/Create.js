@@ -87,7 +87,6 @@ export default function Create(props) {
   }
 
   async function createPassport() {
-    return console.log(person)
     setIsCreatingPassport(true);
     try {
       const { ethereum } =  window;
